@@ -34,7 +34,7 @@ export function EditModal(props) {
 
     var expensesString = JSON.stringify(expenseJson);
     localStorage.setItem("expense", expensesString);
-    alert("Changes save!");
+    alert("Changes saved!");
     props.onClose();
   } 
   return (
