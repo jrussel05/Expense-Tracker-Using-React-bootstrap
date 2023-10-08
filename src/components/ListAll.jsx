@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Table, Container, Row, Col} from "react-bootstrap";
+import {Button, Table, Container, Row, Col, InputGroup, Form } from "react-bootstrap";
 import {AddModal} from './AddModal';
 import { DeleteModal } from './DeleteModla';
 import { EditModal } from './EditModal';
@@ -14,10 +14,11 @@ function ListAll() {
   const [ total, setTotal] = React.useState("0.00");
   const [idToDelete, setIdToDelete] = React.useState(0);
   const [expenseToEdit, setExpenseToEdit] = React.useState();
+  const [search, setSearch] = React.useState("");
 
   React.useEffect(function() {
     loadExpense();
-  }, [ ]);
+  }, []);
 
   const toggleShowAddModal = () => {
     setAddModal(!showAddModal);
@@ -61,6 +62,14 @@ function ListAll() {
       <Container className='mt-5' >
         <Row>
           <Col><h1>Expense ({total})</h1></Col>
+          <Col><InputGroup className="mb-3">
+        <Form.Control
+          onChange={(e) => {setSearch(e.target.value)}}
+          placeholder="Search.."
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+        />
+      </InputGroup></Col>
           <Col className='text-end'><Button onClick={toggleShowAddModal} variant='primary'>Add</Button></Col>
         </Row>
         
@@ -74,8 +83,8 @@ function ListAll() {
         </tr>
       </thead>
       <tbody>
-        {expense.map((expense, index) => 
-          <tr key={index}>
+        {expense.filter((e) => e.title.toLowerCase().includes(search)).map((expense, index) => 
+          <tr key={index.id}>
           <td><Button variant="link" onClick={() => toggleShowEdit(expense)}>{expense.title}</Button></td>
           <td>{expense.date}</td>
           <td className='text-end' >{getCommaSeparatedTwoDecimalsNumber(expense.amount)}</td>
@@ -91,11 +100,9 @@ function ListAll() {
       </Container>
         <AddModal show={showAddModal} onClose={toggleShowAddModal}/>
         <DeleteModal show={showDeleteModal} onClose={toggleShowdeleteModal} id={idToDelete}/>
-        {expenseToEdit != undefined && 
+        {expenseToEdit !== undefined && 
          <EditModal show={showEditModal} onClose={ toggleShowEdit} expense={expenseToEdit} />
          }
-       
-
     </>
   )
 }

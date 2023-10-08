@@ -1,7 +1,15 @@
 import React from 'react';
 import {Modal, Button, Form} from "react-bootstrap";
+import SuccessAlert from './SuccessAlert';
 
 export function AddModal(props) {
+
+  const [showAlert, setShowAlert] = React.useState(false)
+
+
+  const toggleShowAlert = () => {
+    setShowAlert(!showAlert);
+  }
 
   const handleSave = (e) => {
     e.preventDefault(e.target)
@@ -29,7 +37,7 @@ export function AddModal(props) {
     existingExpenses.push(expense);
     var toSave = JSON.stringify(existingExpenses);
     localStorage.setItem("expense", toSave);
-    alert("Successfully added!");
+    setShowAlert(true)
     props.onClose();
   }
 
@@ -71,6 +79,8 @@ export function AddModal(props) {
     </Form>
         </Modal.Body>
       </Modal>
+
+      <SuccessAlert show={showAlert} onClose={toggleShowAlert}/>
     </>
   )
 }

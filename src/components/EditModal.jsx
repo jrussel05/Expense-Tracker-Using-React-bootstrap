@@ -1,10 +1,18 @@
 import React from "react";
 import { Form, Modal, Button} from "react-bootstrap";
+import EditAlert from "./EditAlert";
 
 export function EditModal(props) {
+
+  
   const [title, setTitle] = React.useState(props.expense?.title);
   const [amount, setAmount] = React.useState(props.expense?.amount);
   const [date, setDate] = React.useState(props.expense?.date);
+  const [showEditAlert, setShowEditAlert] = React.useState(false);
+
+  const handleEditAlert = () => {
+    setShowEditAlert(!showEditAlert)
+  }
 
   const handlerAmountChange = (e) => {
     setAmount(e.target.value);
@@ -29,15 +37,17 @@ export function EditModal(props) {
     var expensesFromStorage = localStorage.getItem("expense");
     if (expensesFromStorage != null) 
     var expenseJson = JSON.parse(expensesFromStorage);
-    var foundIndex = expenseJson.findIndex(x => x.id == props.expense.id);
+    var foundIndex = expenseJson.findIndex(x => x.id === props.expense.id);
     expenseJson[foundIndex] = dataToSave;
 
     var expensesString = JSON.stringify(expenseJson);
     localStorage.setItem("expense", expensesString);
-    alert("Changes saved!");
+    handleEditAlert(true);
     props.onClose();
   } 
   return (
+
+    <>
     <Modal
         show={props.show}
         onHide={props.onClose}
@@ -64,7 +74,7 @@ export function EditModal(props) {
         <Form.Control value={date} onChange={handlerDateChange}  name="date" type="date" placeholder="Enter date" />
       </Form.Group>
 
-      <Button className='me-2' variant="primary" type="submit">
+      <Button className='me-2' variant="primary" type="submit" >
         Save changes
       </Button>
       <Button  variant="secondary" onClick={props.onClose}>
@@ -73,6 +83,9 @@ export function EditModal(props) {
     </Form>
         </Modal.Body>
       </Modal>
+      <EditAlert show={showEditAlert} onClose={handleEditAlert} />
+    </>
+    
   
   )  
 }

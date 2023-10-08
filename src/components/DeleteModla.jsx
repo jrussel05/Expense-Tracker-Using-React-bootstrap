@@ -1,7 +1,17 @@
 import { Button, Modal } from "react-bootstrap"
+import DeleteAlert from "./DeleteAlert";
+import React from "react";
 
 //props = id show onclose
 export function DeleteModal (props) {
+
+  const [showAlertDelete, setShowAlertDelete] = React.useState(false)
+
+
+  const toggleShowAlertDelete = () => {
+    setShowAlertDelete(!showAlertDelete);
+  }
+
     const handleDelete = () => {
       var expenseFromStorage = localStorage.getItem("expense");
       if (expenseFromStorage != null) {
@@ -12,12 +22,13 @@ export function DeleteModal (props) {
         });
         var filterdExpeneString = JSON.stringify(filteredExpenses)
         localStorage.setItem("expense", filterdExpeneString);
-        alert("Deleted")
+        setShowAlertDelete(true);
         props.onClose();
       }
     }
     return (
-        <Modal
+      <>
+      <Modal
         show={props.show}
         onHide={props.onClose}
         backdrop="static"
@@ -36,5 +47,7 @@ export function DeleteModal (props) {
           <Button variant="danger" onClick={handleDelete}>Delete</Button>
         </Modal.Footer>
       </Modal>
+      <DeleteAlert show={showAlertDelete} onClose={toggleShowAlertDelete}/>
+      </>
     )
 }
