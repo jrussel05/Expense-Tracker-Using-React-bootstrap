@@ -83,7 +83,9 @@ function ListAll() {
         </tr>
       </thead>
       <tbody>
-        {expense.filter((e) => e.title.toLowerCase().includes(search)).map((expense, index) => 
+        {expense.filter((post) => {
+           return post.title.match(search);
+      }).map((expense, index) => 
           <tr key={index.id}>
           <td><Button variant="link" onClick={() => toggleShowEdit(expense)}>{expense.title}</Button></td>
           <td>{expense.date}</td>
