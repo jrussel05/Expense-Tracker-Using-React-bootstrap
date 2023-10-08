@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/Expense-Tracker-Using-React-bootstrap/static/js/main.e97a0888.js",
+    "main.js": "/Expense-Tracker-Using-React-bootstrap/static/js/main.ddde2b1f.js",
     "index.html": "/Expense-Tracker-Using-React-bootstrap/index.html",
-    "main.e97a0888.js.map": "/Expense-Tracker-Using-React-bootstrap/static/js/main.e97a0888.js.map"
+    "main.ddde2b1f.js.map": "/Expense-Tracker-Using-React-bootstrap/static/js/main.ddde2b1f.js.map"
   },
   "entrypoints": [
-    "static/js/main.e97a0888.js"
+    "static/js/main.ddde2b1f.js"
   ]
 }
